@@ -1,11 +1,12 @@
-import { test } from 'node:test';
-import assert from 'node:assert/strict';
-import cds from '@sap/cds';
-import { Parser } from '@dbml/core';
-import { compileToDBML } from '../index.js';
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import cds from "@sap/cds";
+import { Parser } from "@dbml/core";
+import { compileToDBML } from "../index.js";
 
-test('Simple Entity Compilation to DBML', () => {
-  const csn = cds.compile(`
+test("Simple Entity Compilation to DBML", () => {
+  const csn = cds
+    .compile(`
     namespace my.bookshop;
 
     entity Books {
@@ -14,7 +15,8 @@ test('Simple Entity Compilation to DBML', () => {
       price  : Decimal(9,2);
       stock  : Integer;
     }
-  `).to.csn();
+  `)
+    .to.csn();
 
   const dbml = compileToDBML(csn);
 
@@ -26,12 +28,13 @@ test('Simple Entity Compilation to DBML', () => {
   assert.match(dbml, /TableGroup "my\.bookshop"/);
 
   // Validate syntax with @dbml/core
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });
 
-test('Data Types, Default Values, and Not Null', () => {
-  const csn = cds.compile(`
+test("Data Types, Default Values, and Not Null", () => {
+  const csn = cds
+    .compile(`
     namespace my.sample;
 
     entity TypesTest {
@@ -48,7 +51,8 @@ test('Data Types, Default Values, and Not Null', () => {
           blobData  : LargeBinary;
           textData  : LargeString;
     }
-  `).to.csn();
+  `)
+    .to.csn();
 
   const dbml = compileToDBML(csn);
 
@@ -65,12 +69,13 @@ test('Data Types, Default Values, and Not Null', () => {
   assert.match(dbml, /"textData" text/);
 
   // Validate syntax
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });
 
-test('Enum Definitions and Mapping', () => {
-  const csn = cds.compile(`
+test("Enum Definitions and Mapping", () => {
+  const csn = cds
+    .compile(`
     namespace my.bookshop;
 
     type Genre : String enum {
@@ -83,7 +88,8 @@ test('Enum Definitions and Mapping', () => {
           title : String(100);
           genre : Genre;
     }
-  `).to.csn();
+  `)
+    .to.csn();
 
   const dbml = compileToDBML(csn);
 
@@ -93,12 +99,13 @@ test('Enum Definitions and Mapping', () => {
   assert.match(dbml, /"genre" "my\.bookshop\.Genre"/);
 
   // Validate syntax
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });
 
-test('Managed Associations and Relationships', () => {
-  const csn = cds.compile(`
+test("Managed Associations and Relationships", () => {
+  const csn = cds
+    .compile(`
     namespace my.bookshop;
 
     entity Books {
@@ -112,7 +119,8 @@ test('Managed Associations and Relationships', () => {
           name  : String(100);
           books : Association to many Books on books.author = $self;
     }
-  `).to.csn();
+  `)
+    .to.csn();
 
   const dbml = compileToDBML(csn);
 
@@ -120,12 +128,13 @@ test('Managed Associations and Relationships', () => {
   assert.match(dbml, /Ref: "my\.bookshop\.Books"\."author_ID" > "my\.bookshop\.Authors"\."ID"/);
 
   // Validate syntax
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });
 
-test('Compositions and Parent-Child Entities', () => {
-  const csn = cds.compile(`
+test("Compositions and Parent-Child Entities", () => {
+  const csn = cds
+    .compile(`
     namespace my.orders;
 
     entity Orders {
@@ -138,19 +147,22 @@ test('Compositions and Parent-Child Entities', () => {
           parent : Association to Orders;
           pos    : Integer;
     }
-  `).to.csn();
+  `)
+    .to.csn();
 
   const dbml = compileToDBML(csn);
 
   assert.match(dbml, /Ref: "my\.orders\.OrderItems"\."parent_ID" > "my\.orders\.Orders"\."ID"/);
 
   // Validate syntax
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });
 
-test('Doc Comments and Annotations (@title, @description)', () => {
-  const csn = cds.compile(`
+test("Doc Comments and Annotations (@title, @description)", () => {
+  const csn = cds
+    .compile(
+      `
     namespace my.bookshop;
 
     /** Main Books Entity */
@@ -163,7 +175,10 @@ test('Doc Comments and Annotations (@title, @description)', () => {
       /** Book Title */
       title  : String(100);
     }
-  `, { docs: true }).to.csn();
+  `,
+      { docs: true },
+    )
+    .to.csn();
 
   const dbml = compileToDBML(csn);
 
@@ -171,12 +186,13 @@ test('Doc Comments and Annotations (@title, @description)', () => {
   assert.match(dbml, /"ID" varchar\(36\) \[pk, note: 'Primary Identifier'\]/);
 
   // Validate syntax
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });
 
-test('Options: Sorting, Project Header, Disable TableGroups', () => {
-  const csn = cds.compile(`
+test("Options: Sorting, Project Header, Disable TableGroups", () => {
+  const csn = cds
+    .compile(`
     namespace my.bookshop;
 
     entity Zebra {
@@ -186,12 +202,13 @@ test('Options: Sorting, Project Header, Disable TableGroups', () => {
     entity Alpha {
       key ID : UUID;
     }
-  `).to.csn();
+  `)
+    .to.csn();
 
   const dbml = compileToDBML(csn, {
     sort: true,
-    project: 'MyBookshopProject',
-    tableGroups: false
+    project: "MyBookshopProject",
+    tableGroups: false,
   });
 
   assert.match(dbml, /Project "MyBookshopProject"/);
@@ -204,27 +221,29 @@ test('Options: Sorting, Project Header, Disable TableGroups', () => {
   assert.ok(alphaIdx < zebraIdx);
 
   // Validate syntax
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });
 
-test('Lifecycle Event Hooks (before and after)', () => {
+test("Lifecycle Event Hooks (before and after)", () => {
   let beforeHookCalled = false;
   let afterHookCalled = false;
 
-  cds.on('compile.to.dbml', ({ csn, options }) => {
+  cds.on("compile.to.dbml", ({ _csn, options }) => {
     beforeHookCalled = true;
-    options.project = 'EventHookProject';
+    options.project = "EventHookProject";
   });
 
-  cds.on('after:compile.to.dbml', ({ csn, options, result }) => {
+  cds.on("after:compile.to.dbml", ({ _csn, _options, _result }) => {
     afterHookCalled = true;
   });
 
-  const csn = cds.compile(`
+  const csn = cds
+    .compile(`
     namespace my.bookshop;
     entity Books { key ID : UUID; }
-  `).to.csn();
+  `)
+    .to.csn();
 
   const dbml = cds.compile.to.dbml(csn);
 
@@ -233,6 +252,6 @@ test('Lifecycle Event Hooks (before and after)', () => {
   assert.match(dbml, /Project "EventHookProject"/);
 
   // Validate syntax
-  const parsed = Parser.parse(dbml, 'dbml');
+  const parsed = Parser.parse(dbml, "dbml");
   assert.ok(parsed);
 });

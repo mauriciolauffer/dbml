@@ -1,14 +1,16 @@
-import cds from '@sap/cds';
-import { compileToDBML } from './lib/compile/index.js';
+import cds from "@sap/cds";
+import { compileToDBML } from "./lib/compile/index.js";
 
 if (cds.compile?.to) {
   try {
-    cds.extend(cds.compile.to.constructor).with(class {
-      get dbml() {
-        return compileToDBML;
-      }
-    });
-  } catch (err) {
+    cds.extend(cds.compile.to.constructor).with(
+      class {
+        get dbml() {
+          return compileToDBML;
+        }
+      },
+    );
+  } catch {
     // Fallback assignment if extend fails
     cds.compile.to.dbml = compileToDBML;
   }
