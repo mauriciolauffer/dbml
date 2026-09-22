@@ -1,8 +1,8 @@
-const { test } = require('node:test');
-const assert = require('node:assert/strict');
-const cds = require('@sap/cds');
-const { Parser } = require('@dbml/core');
-const { compileToDBML } = require('../index.js');
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import cds from '@sap/cds';
+import { Parser } from '@dbml/core';
+import { compileToDBML } from '../index.js';
 
 test('Simple Entity Compilation to DBML', () => {
   const csn = cds.compile(`

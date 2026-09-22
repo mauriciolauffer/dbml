@@ -1,5 +1,5 @@
-const cds = require('@sap/cds');
-const { compileToDBML } = require('./lib/compile');
+import cds from '@sap/cds';
+import { compileToDBML } from './lib/compile/index.js';
 
 if (cds.compile?.to) {
   try {
