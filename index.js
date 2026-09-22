@@ -1,7 +1,5 @@
-const { compileToDBML } = require('./lib/compile');
-require('./cds-plugin');
+import { compileToDBML } from './lib/compile/index.js';
+import './cds-plugin.js';
 
-module.exports = {
-  compile: compileToDBML,
-  compileToDBML
-};
+export { compileToDBML, compileToDBML as compile };
+export default compileToDBML;

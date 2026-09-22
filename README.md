@@ -53,11 +53,11 @@ cds compile db --to dbml --dest gen/dbml
 
 ### Programmatic Usage
 
-You can also call the compiler programmatically in Node.js:
+You can call the compiler programmatically in Node.js (ES Modules):
 
 ```js
-const cds = require('@sap/cds');
-require('cds-dbml'); // Ensures plugin target is registered
+import cds from '@sap/cds';
+import 'cds-dbml'; // Ensures plugin target is registered
 
 const csn = await cds.load('db/schema.cds');
 
@@ -69,7 +69,7 @@ console.log(dbml);
 Alternatively, import the compiler function directly:
 
 ```js
-const { compileToDBML } = require('cds-dbml');
+import { compileToDBML } from 'cds-dbml';
 
 const dbml = compileToDBML(csn, { sort: true });
 ```
@@ -81,7 +81,7 @@ const dbml = compileToDBML(csn, { sort: true });
 You can hook into the compilation lifecycle to inspect or modify the CSN model before conversion, or customize the generated DBML string after conversion:
 
 ```js
-const cds = require('@sap/cds');
+import cds from '@sap/cds';
 
 // Hook before conversion (modify CSN or options)
 cds.on('compile.to.dbml', ({ csn, options }) => {
