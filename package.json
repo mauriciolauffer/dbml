@@ -1,0 +1,28 @@
+{
+  "name": "cds-dbml",
+  "version": "1.0.0",
+  "description": "CAP plugin for DBML (Database Markup Language) generation",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "CAP",
+    "CDS",
+    "DBML",
+    "Database",
+    "Node.js"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "@sap/cds": ">=7.0.0"
+  },
+  "devDependencies": {
+    "@dbml/core": "^10.1.1",
+    "@sap/cds": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
