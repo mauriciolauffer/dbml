@@ -30,7 +30,7 @@ Install the plugin in your CAP project:
 npm install --save-dev cds-dbml
 ```
 
-*Note: `@sap/cds` >= 7.0.0 is required as a peer dependency.*
+_Note: `@sap/cds` >= 7.0.0 is required as a peer dependency._
 
 ---
 
@@ -100,11 +100,11 @@ cds.on('after:compile.to.dbml', ({ csn, options, result }) => {
 
 Options can be passed via CLI arguments or programmatically:
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `sort` | `boolean` | `false` | Sorts entities, columns, and relationships alphabetically for deterministic output. |
-| `project` | `string` | `undefined` | Project title for the DBML `Project` header block. |
-| `tableGroups` | `boolean` | `true` | Group tables into DBML `TableGroup` blocks by CDS namespace. |
+| Option        | Type      | Default     | Description                                                                         |
+| ------------- | --------- | ----------- | ----------------------------------------------------------------------------------- |
+| `sort`        | `boolean` | `false`     | Sorts entities, columns, and relationships alphabetically for deterministic output. |
+| `project`     | `string`  | `undefined` | Project title for the DBML `Project` header block.                                  |
+| `tableGroups` | `boolean` | `true`      | Group tables into DBML `TableGroup` blocks by CDS namespace.                        |
 
 Example CLI usage with options:
 
