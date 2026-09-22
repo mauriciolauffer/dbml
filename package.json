@@ -24,14 +24,14 @@
   },
   "devDependencies": {
     "@dbml/core": "^10.1.1",
-    "@sap/cds": "^8.0.0",
+    "@sap/cds": ">=8",
     "oxfmt": "^0.20.0",
     "oxlint": "^0.15.12"
   },
   "peerDependencies": {
-    "@sap/cds": ">=7.0.0"
+    "@sap/cds": ">=8"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20"
   }
 }
