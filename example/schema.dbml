@@ -4,15 +4,12 @@ Table "sap.capire.bookshop.Books" {
   "modifiedAt" timestamp [note: '{i18n>ChangedAt}']
   "modifiedBy" varchar(255) [note: '{i18n>ChangedBy}']
   "ID" integer [pk]
-  "author" association
   "author_ID" integer
   "title" varchar(255)
   "descr" varchar(255)
-  "genre" association
   "genre_ID" varchar(36)
   "stock" integer
   "price" decimal(9, 2)
-  "currency" association [note: '{i18n>Currency}']
   "currency_code" varchar(3)
 }
 
@@ -33,7 +30,6 @@ Table "sap.capire.bookshop.Genres" {
   "ID" varchar(36) [pk]
   "name" varchar(255) [note: '{i18n>Name}']
   "descr" varchar(1000) [note: '{i18n>Description}']
-  "parent" association
   "parent_ID" varchar(36)
 }
 
@@ -111,13 +107,7 @@ Table "sap.common.Timezones.texts" {
 
 Ref: "sap.capire.bookshop.Books"."author_ID" > "sap.capire.bookshop.Authors"."ID"
 Ref: "sap.capire.bookshop.Books"."genre_ID" > "sap.capire.bookshop.Genres"."ID"
-Ref: "sap.capire.bookshop.Books"."localized_ID" > "sap.capire.bookshop.Books.texts"."ID_texts"
 Ref: "sap.capire.bookshop.Genres"."parent_ID" > "sap.capire.bookshop.Genres"."ID"
-Ref: "sap.capire.bookshop.Genres"."localized_ID" > "sap.capire.bookshop.Genres.texts"."locale"
-Ref: "sap.common.Languages"."localized_ID" > "sap.common.Languages.texts"."locale"
-Ref: "sap.common.Countries"."localized_ID" > "sap.common.Countries.texts"."locale"
-Ref: "sap.common.Currencies"."localized_ID" > "sap.common.Currencies.texts"."locale"
-Ref: "sap.common.Timezones"."localized_ID" > "sap.common.Timezones.texts"."locale"
 
 TableGroup "sap.capire.bookshop" {
   "sap.capire.bookshop.Books"
