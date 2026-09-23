@@ -1,0 +1,158 @@
+Table "sap.capire.bookshop.Books" {
+  "createdAt" timestamp [note: '{i18n>CreatedAt}']
+  "createdBy" varchar(255) [note: '{i18n>CreatedBy}']
+  "modifiedAt" timestamp [note: '{i18n>ChangedAt}']
+  "modifiedBy" varchar(255) [note: '{i18n>ChangedBy}']
+  "ID" integer [pk]
+  "author" association
+  "author_ID" integer
+  "title" varchar(255)
+  "descr" varchar(255)
+  "genre" association
+  "genre_ID" varchar(36)
+  "stock" integer
+  "price" decimal(9, 2)
+  "currency" association [note: '{i18n>Currency}']
+  "currency_code" varchar(3)
+}
+
+Table "sap.capire.bookshop.Authors" {
+  "createdAt" timestamp [note: '{i18n>CreatedAt}']
+  "createdBy" varchar(255) [note: '{i18n>CreatedBy}']
+  "modifiedAt" timestamp [note: '{i18n>ChangedAt}']
+  "modifiedBy" varchar(255) [note: '{i18n>ChangedBy}']
+  "ID" integer [pk]
+  "name" varchar(255)
+  "dateOfBirth" date
+  "dateOfDeath" date
+  "placeOfBirth" varchar(255)
+  "placeOfDeath" varchar(255)
+}
+
+Table "sap.capire.bookshop.Genres" {
+  "ID" varchar(36) [pk]
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "parent" association
+  "parent_ID" varchar(36)
+}
+
+Table "sap.common.Languages" {
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(14) [pk, note: '{i18n>LanguageCode}']
+}
+
+Table "sap.common.Countries" {
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(3) [pk, note: '{i18n>CountryCode}']
+}
+
+Table "sap.common.Currencies" {
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(3) [pk, note: '{i18n>CurrencyCode}']
+  "symbol" varchar(5) [note: '{i18n>CurrencySymbol}']
+  "minorUnit" smallint [note: '{i18n>CurrencyMinorUnit}']
+  "numcode" integer
+  "exponent" integer
+  "minor" varchar(255)
+}
+
+Table "sap.common.Timezones" {
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(100) [pk, note: '{i18n>TimeZoneCode}']
+}
+
+Table "sap.capire.bookshop.Books.texts" {
+  "ID_texts" varchar(36) [pk]
+  "locale" varchar(14) [note: '{i18n>LanguageCode}']
+  "ID" integer
+  "title" varchar(255)
+  "descr" varchar(255)
+}
+
+Table "sap.capire.bookshop.Genres.texts" {
+  "locale" varchar(14) [pk, note: '{i18n>LanguageCode}']
+  "ID" varchar(36) [pk]
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+}
+
+Table "sap.common.Languages.texts" {
+  "locale" varchar(14) [pk, note: '{i18n>LanguageCode}']
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(14) [pk, note: '{i18n>LanguageCode}']
+}
+
+Table "sap.common.Countries.texts" {
+  "locale" varchar(14) [pk, note: '{i18n>LanguageCode}']
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(3) [pk, note: '{i18n>CountryCode}']
+}
+
+Table "sap.common.Currencies.texts" {
+  "locale" varchar(14) [pk, note: '{i18n>LanguageCode}']
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(3) [pk, note: '{i18n>CurrencyCode}']
+}
+
+Table "sap.common.Timezones.texts" {
+  "locale" varchar(14) [pk, note: '{i18n>LanguageCode}']
+  "name" varchar(255) [note: '{i18n>Name}']
+  "descr" varchar(1000) [note: '{i18n>Description}']
+  "code" varchar(100) [pk, note: '{i18n>TimeZoneCode}']
+}
+
+Ref: "sap.capire.bookshop.Books"."author_ID" > "sap.capire.bookshop.Authors"."ID"
+Ref: "sap.capire.bookshop.Books"."genre_ID" > "sap.capire.bookshop.Genres"."ID"
+Ref: "sap.capire.bookshop.Books"."localized_ID" > "sap.capire.bookshop.Books.texts"."ID_texts"
+Ref: "sap.capire.bookshop.Genres"."parent_ID" > "sap.capire.bookshop.Genres"."ID"
+Ref: "sap.capire.bookshop.Genres"."localized_ID" > "sap.capire.bookshop.Genres.texts"."locale"
+Ref: "sap.common.Languages"."localized_ID" > "sap.common.Languages.texts"."locale"
+Ref: "sap.common.Countries"."localized_ID" > "sap.common.Countries.texts"."locale"
+Ref: "sap.common.Currencies"."localized_ID" > "sap.common.Currencies.texts"."locale"
+Ref: "sap.common.Timezones"."localized_ID" > "sap.common.Timezones.texts"."locale"
+
+TableGroup "sap.capire.bookshop" {
+  "sap.capire.bookshop.Books"
+  "sap.capire.bookshop.Authors"
+  "sap.capire.bookshop.Genres"
+}
+
+TableGroup "sap.common" {
+  "sap.common.Languages"
+  "sap.common.Countries"
+  "sap.common.Currencies"
+  "sap.common.Timezones"
+}
+
+TableGroup "sap.capire.bookshop.Books" {
+  "sap.capire.bookshop.Books.texts"
+}
+
+TableGroup "sap.capire.bookshop.Genres" {
+  "sap.capire.bookshop.Genres.texts"
+}
+
+TableGroup "sap.common.Languages" {
+  "sap.common.Languages.texts"
+}
+
+TableGroup "sap.common.Countries" {
+  "sap.common.Countries.texts"
+}
+
+TableGroup "sap.common.Currencies" {
+  "sap.common.Currencies.texts"
+}
+
+TableGroup "sap.common.Timezones" {
+  "sap.common.Timezones.texts"
+}
+

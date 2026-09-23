@@ -1,0 +1,17 @@
+{
+  "name": "cds-dbml-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "cds-serve",
+    "generate:dbml": "cds compile db --to dbml > schema.dbml"
+  },
+  "dependencies": {
+    "@sap/cds": "^10"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^3",
+    "cds-dbml": "file:../"
+  }
+}
