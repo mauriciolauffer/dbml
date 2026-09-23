@@ -11,6 +11,10 @@
   ],
   "license": "Apache-2.0",
   "author": "",
+  "workspaces": [
+    ".",
+    "example"
+  ],
   "type": "module",
   "main": "index.js",
   "exports": {
@@ -19,12 +23,11 @@
   },
   "scripts": {
     "test": "node --test",
-    "lint": "oxlint",
+    "lint": "oxfmt --check && oxlint",
     "format": "oxfmt"
   },
   "devDependencies": {
     "@dbml/core": "^10.1.1",
-    "@sap/cds": ">=8",
     "oxfmt": "^0.20.0",
     "oxlint": "^0.15.12"
   },
