@@ -32,6 +32,19 @@ test("Simple Entity Compilation to DBML", () => {
   assert.ok(parsed);
 });
 
+test("Localized Entities and Example Schema Syntax Validation", async () => {
+  const csn = await cds.load("example/db");
+  const dbml = compileToDBML(csn);
+
+  // Must not contain invalid Ref for localized_ID or pseudo association columns
+  assert.doesNotMatch(dbml, /localized_ID/);
+  assert.doesNotMatch(dbml, /"author"\s+association/);
+
+  // Validate syntax with @dbml/core
+  const parsed = Parser.parse(dbml, "dbml");
+  assert.ok(parsed);
+});
+
 test("Data Types, Default Values, and Not Null", () => {
   const csn = cds
     .compile(`
