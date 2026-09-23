@@ -3,14 +3,26 @@
   "version": "1.0.0",
   "description": "CAP plugin for DBML (Database Markup Language) generation",
   "keywords": [
-    "CAP",
-    "CDS",
-    "DBML",
-    "Database",
-    "Node.js"
+    "cap",
+    "cap-js",
+    "cds",
+    "database",
+    "dbml",
+    "nodejs",
+    "plugin",
+    "sap",
+    "sap-cap"
   ],
-  "license": "Apache-2.0",
-  "author": "",
+  "homepage": "https://github.com/mauriciolauffer/cds-dbml#readme",
+  "bugs": {
+    "url": "https://github.com/mauriciolauffer/cds-dbml/issues"
+  },
+  "license": "MIT",
+  "author": "Mauricio Lauffer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mauriciolauffer/cds-dbml.git"
+  },
   "workspaces": [
     ".",
     "example"
@@ -30,8 +42,8 @@
     "@dbml/core": "^10.1.1"
   },
   "devDependencies": {
-    "oxfmt": "^0.20.0",
-    "oxlint": "^0.15.12"
+    "oxfmt": "^0.68.0",
+    "oxlint": "^1.83.0"
   },
   "peerDependencies": {
     "@sap/cds": ">=8"
