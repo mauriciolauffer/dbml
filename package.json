@@ -23,10 +23,6 @@
     "type": "git",
     "url": "https://github.com/mauriciolauffer/cds-dbml.git"
   },
-  "workspaces": [
-    ".",
-    "example"
-  ],
   "type": "module",
   "main": "index.js",
   "exports": {
@@ -50,5 +46,6 @@
   },
   "engines": {
     "node": ">=22"
-  }
+  },
+  "packageManager": "pnpm@10.30.3"
 }
