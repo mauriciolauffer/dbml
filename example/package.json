@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^3",
-    "cds-dbml": "file:../"
+    "cds-dbml": "workspace:*"
   }
 }
